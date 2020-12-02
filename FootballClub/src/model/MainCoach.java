@@ -4,11 +4,13 @@ import model;
 public class MainCoach extends Employee{
 	int experienceYears, teamsManaged, championshipsWinned, salary;
 	double marketValue, level;
+	String name;
 	
 	
 	public MainCoach(int experienceYears, int teamsManaged, int championshipsWinned, String name, int id, boolean state, int salary){
 		super(name, id, state, salary);
 		
+		this.name = name;
 		this.salary = super.salary;
 		this. experienceYears = experienceYears;
 		this.teamsManaged = teamsManaged;

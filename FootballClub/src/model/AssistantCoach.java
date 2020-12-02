@@ -4,11 +4,12 @@ import model;
 public class AssistantCoach extends Employee{
 	int experienceYears;
 	boolean wasPlayer;
-	String expertise;
+	String expertise, name;
 	
 	public AssistantCoach(int experienceYears, boolean wasPlayer, String expertise, String name, int id, boolean state, int salary){
 		super(name, id, state, salary);
 		
+		this.name = name;
 		this.experienceYears = experienceYears;
 		this.wasPlayer = wasPlayer;
 		this.expertise = expertise;

@@ -21,6 +21,7 @@ public class Club{
 		this.fundationDate = fundationDate;
 	}
 	
+	//Shows the info that the user it's asking for.
 	public String showParticularInfo(int type, int position){
 		boolean space = false;
 		String msg = "";
@@ -42,11 +43,24 @@ public class Club{
 					}
 					break;
 			
-			default: msg = "Tipo de empleado inexistente.";
+			case 4: if(allTeams != null){
+						msg = allTeams[position].showTeamInfo();
+					}
+					break;
+					
+			case 5:	msg = "Información del club: \n";
+					msg += "Nit: " + nit + "\n";
+					msg += "Nombre: " + name + "\n";
+					msg += "Fecha de fundación:" + fundationDate + "\n";
+					msg += "\n";	
+					break;
+			
+			default: msg = "Tipo de información inexistente.";
 					break;
 		}
 	}
 	
+	//Shows all the info.
 	public String showAllInfo(){
 		boolean space = false;
 		String msg = "";
@@ -59,6 +73,14 @@ public class Club{
 		msg += "\n";
 		
 		//Teams info.
+		msg += "Información de los equipos: \n";
+		for(int i = 0; i < MAXIMUM_TEAMS ! space ; i++){
+			if(allTeams[i] != null){
+				msg += allTeams[i].showTeamInfo();
+			}
+		}
+		msg += "\n";
+		space = false;
 		
 		//Employees info.
 		msg += "Información de los empleados: \n";
@@ -68,6 +90,7 @@ public class Club{
 				space = true;
 			}
 		}
+		msg += "\n";
 		space = false;
 		
 		for(int i = 0; i<MAXIMUM_MAIN_COACHES && !space ; i++){
@@ -76,6 +99,7 @@ public class Club{
 				space = true;
 			}
 		}
+		msg += "\n";
 		space = false;
 		
 		for(int i = 0; i<MAXIMUM_MAIN_COACHES && !space ; i++){
@@ -84,6 +108,7 @@ public class Club{
 				space = true;
 			}
 		}
+		msg += "\n";
 		return msg;
 	}
 	
@@ -201,7 +226,7 @@ public class Club{
 		boolean space = false;
 		
 		for(int i = 0; i < MAXIMUM_ASSISTANT_COACHES && !space ; i++){
-			if(allAssistantCoach[i] != null){
+			if(allAssistantCoaches[i] != null){
 				space = true;
 				allAssistantCoaches[i] = new AssistantCoach(experienceYears, wasPlayer, expertise);
 				msg = "Asistente técnico añadido correctamente.";
@@ -211,5 +236,80 @@ public class Club{
 			}
 		}
 		return msg;
+	}
+	
+	//This methods are for firing people.
+	public String removeMainCoach(int position){
+		position = position-1;
+		
+		MainCoach [] temporalArray = new MainCoach[MAXIMUM_MAIN_COACHES];
+		
+		if(allMainCoaches[i] != allMainCoaches[position]){
+			temporalArray[i] = allMainCoaches[i];
+		}
+		
+		allMainCoaches = temporalArray;
+		
+		String msg = "Entrenador principal despedido exitosamente.";
+		return msg;
+	}
+	
+	public String removeAssistantCoach(int position){
+		position = position-1;
+		
+		AssistantCoach [] temporalArray = new AssistantCoach[MAXIMUM_ASSISTANT_COACHES];
+		
+		if(allAssistantCoaches[i] != allAssistantCoaches[position]){
+			temporalArray[i] = allAssistantCoaches[i];
+		}
+		
+		allAssistantCoaches = temporalArray;
+		
+		String msg = "Asistente técnico despedido exitosamente.";
+		return msg;
+	}
+	
+	public String removePlayer(int position){
+		position = position-1;
+		
+		Player [] temporalArray = new Player[MAXIMUM_PLAYERS];
+		
+		if(allPlayers[i] != allPlayers[position]){
+			temporalArray[i] = allPlayers[i];
+		}
+		
+		allPlayers = temporalArray;
+		
+		String msg = "Jugador despedido exitosamente.";
+		return msg;
+	}
+
+	//This methods shows the info. Are going to be used in the menu selection.
+	public String showMainCoaches(){
+		String msg = "";
+		boolean space = false;
+		
+		for(int i = 0; i < MAXIMUM_MAIN_COACHES && !space ; i++){
+			if(allMainCoaches[i] != null){
+				msg += allMainCoaches[i].showEmployeeInfo();
+			}
+			else{
+				space = true;
+			}
+		}
+	}
+	
+	public String showAssistantCoaches(){
+		String msg = "";
+		boolean space = false;
+		
+		for(int i = 0; i < MAXIMUM_MAIN_COACHES && !space ; i++){
+			if(allMainCoaches[i] != null){
+				msg += allMainCoaches[i].showEmployeeInfo();
+			}
+			else{
+				space = true;
+			}
+		}
 	}
 }

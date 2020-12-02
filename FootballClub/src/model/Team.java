@@ -19,6 +19,23 @@ public class Team{
 		alineations  = new ArrayList <Alineation> ();
 	}
 	
+	public String showTeamInfo(){
+		
+		String msg = "\n";
+		msg += "Nombre del equipo: " + teamName + "\n";
+		msg += "Entrenador principal: " + mainTrainer.name + "\n";
+		msg += "Asistentes técnicos: ";
+		
+		for(int i = 0 ; i < ASSISTANTS ; i++){
+			if(assistants[i] != null){
+				msg += assistants[i].name + ", ";
+			}
+		}
+		return msg;
+	}
+	
+	
+	//This methods add employees to the team.
 	public String addMainCoach(MainCoach mainCoach){
 		String msg = "";
 		

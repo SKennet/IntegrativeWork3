@@ -18,4 +18,49 @@ public class Team{
 		assistants = new AssistantCoach [ASSISTANTS];
 		alineations  = new ArrayList <Alineation> ();
 	}
+	
+	public String addMainCoach(MainCoach mainCoach){
+		String msg = "";
+		
+		if(mainTrainer == null){
+			mainTrainer = mainCoach;
+			msg = "Entrenador principal asignado correctamente.";
+		}
+		else{
+			msg = "No se pudo asignar el entrenador principal. No hay cupo.";
+		}
+		return msg;
+	}
+	
+	public String addPlayers(Player player){
+		String msg = "";
+		boolean space = false;
+		
+		for(int i = 0; i < MAXIMUM_PLAYERS && !space ; i++){
+			if(players[i] == null){
+				players[i] = player;
+				msg = "Jugador asignado correctamente.";
+			}
+			else{
+				msg = "No se pudo asignar al jugador. No hay cupo.";
+			}
+		}
+		return msg;
+	}
+	
+	public String addAssistantCoach(AssistantCoach technicalAssistant){
+		String msg = "";
+		boolean space = false;
+		
+		for(int i = 0; i < ASSISTANTS && !space ; i++){
+			if(assistants[i] == null){
+				assistants[i] = technicalAssistant;
+				msg = "Asistente técnico asignado correctamente.";
+			}
+			else{
+				msg = "No se pudo asignar al asistente técnico. No hay cupo.";
+			}
+		}
+		return msg;
+	}
 }

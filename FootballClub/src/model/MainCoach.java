@@ -6,7 +6,9 @@ public class MainCoach extends Employee{
 	double marketValue, level;
 	
 	
-	public MainCoach(int experienceYears, int teamsManaged, int championshipsWinned){
+	public MainCoach(int experienceYears, int teamsManaged, int championshipsWinned, String name, int id, boolean state, int salary){
+		super(name, id, state, salary);
+		
 		this.salary = super.salary;
 		this. experienceYears = experienceYears;
 		this.teamsManaged = teamsManaged;
@@ -24,5 +26,20 @@ public class MainCoach extends Employee{
 	public double calculateMarketValue(){
 		marketValue = (salary*10) + (experienceYears * 100) + (championshipsWinned * 50);
 		return marketValue;
+	}
+	
+	@Override
+	public String showEmployeeInfo(){
+		
+		calculateLevel();
+		calculateMarketValue();
+		
+		String msg = super.showEmployeeInfo();
+		msg += "Años de experiencia: " + experienceYears + "\n";
+		msg += "Ha dirijido " + teamsManaged + " equipos."+ "\n";
+		msg += "Ha ganado " + championshipsWinned + " torneos."+ "\n";
+		msg += "Su nivel es: " + level + "\n";
+		msg += "Su valor en el mercado es: $" + marketValue + "\n";
+		msg += "\n";
 	}
 }

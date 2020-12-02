@@ -7,7 +7,9 @@ public class Player extends Employee{
 	private static final double LVL_CONSTANT = 0.9;
 	
 	
-	public Player(int shirtNum, int goles, double markAverage, int position){
+	public Player(int shirtNum, int goles, double markAverage, int position, String name, int id, boolean state, int salary){
+		super(name, id, state, salary);
+		
 		this.salary = super.salary;
 		this.shirtNum = shirtNum;
 		this.goles = goles;
@@ -50,6 +52,23 @@ public class Player extends Employee{
 		}
 		
 		return marketValue;
+	}
+	
+	@Override
+	public String showEmployeeInfo(){
+		
+		//This it's to update the level and marketValue.
+		calculateLevel();
+		calculateMarketValue();
+		
+		String msg = super.showEmployeeInfo();
+		msg += "Su número de camiseta es: " + shirtNum + "\n";
+		msg += "Ha hecho: " + goles + " goles."+ "\n";
+		msg += "Su calificación promedio es:  " + markAverage + "\n";
+		msg += "Su posición es: " + position + "\n";
+		msg += "Su nivel es: " + level + "\n";
+		msg += "Su valor en el mercado es: $" + marketValue + "\n";
+		msg += "\n";
 	}
 	
 	

@@ -12,4 +12,16 @@ public class Employee{
 		this.state = state;
 		this.salary = salary;
 	}
+	
+	public String showEmployeeInfo(){
+		String msg = "";
+		
+		msg += "\n";
+		msg += "Nombre: " + employeeName + "\n";
+		msg += "Id: " + id + "\n";
+		msg += "Estado: " + state + "\n";
+		msg += "Salario: $" + salary + "\n";
+		
+		return msg;
+	}
 }

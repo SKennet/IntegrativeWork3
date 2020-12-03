@@ -12,7 +12,7 @@ public class Alineation{
 	
 	public int [][] (String stringFormation){
 		String [] parts = stringFormation.split("-");
-		
+		 
 		int defenders = Integer.parseInt (parts[0]);
 		int flyers = Integer.parseInt (parts[1]);
 		int forwards = Integer.parseInt (parts[2]);

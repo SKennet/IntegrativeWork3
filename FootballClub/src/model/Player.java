@@ -2,7 +2,7 @@ package model;
 import model;
 
 public class Player extends Employee{
-	int shirtNum, goles, position, salary;
+	int shirtNum, goles, position, salary, id;
 	double markAverage, level, marketValue;
 	private static final double LVL_CONSTANT = 0.9;
 	
@@ -15,6 +15,7 @@ public class Player extends Employee{
 		this.goles = goles;
 		this.markAverage = markAverage;
 		this.position = position;
+		this.id = id;
 	}
 	
 	public double calculateLevel(){
@@ -69,6 +70,86 @@ public class Player extends Employee{
 		msg += "Su nivel es: " + level + "\n";
 		msg += "Su valor en el mercado es: $" + marketValue + "\n";
 		msg += "\n";
+	}
+	
+	//Getters.
+	@Override
+	public int getId(){
+		return super.getId();
+	}
+	
+	@Override
+	public int getSalary(){
+		return super.getSalary;
+	}
+	
+	@Override
+	public String getName(){
+		return super.getName();
+	}
+	
+	@Override
+	public boolean getState(){
+		return super.getState();
+	}
+	
+	public int getShirtNum(){
+		return shirtNum;
+	}
+	public int getGoles(){
+		return goles;
+	}
+	public int getPosition(){
+		return position;
+	}
+	public double getMarkAverage(){
+		return markAverage;
+	}
+	public double getMarketValue(){
+		return calculateMarketValue();
+	}
+	public double getLevel(){
+		return calculateLevel();
+	}
+	
+	//Setters.
+	@Override
+	public void setId(int newId){
+		super.setId(newId);
+	}
+	
+	@Override
+	public void setSalary(int newSalary){
+		super.setSalary(newSalary);
+	}
+	
+	@Override
+	public void setName(String newName){
+		super.setName(newName);
+	}
+	
+	@Override
+	public void setState(boolean newState){
+		super.setState(newState);
+	}
+	
+	public void setShirtNum(int newShirt){
+		shirtNum = newShirt;
+	}
+	public void setGoles(int newGoles){
+		goles = newGoles;
+	}
+	public void setPosition(int newPosition){
+		position = newPosition;
+	}
+	public void setMarkAverage(double newMark){
+		markAverage = newMark;
+	}
+	public void setLevel(double newLevel){
+		level = newLevel;
+	}
+	public void setMarketValue(double newValue){
+		marketValue = newValue;
 	}
 	
 	

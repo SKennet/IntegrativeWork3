@@ -28,22 +28,22 @@ public class Club{
 		position = position-1;
 		
 		switch(type){
-			case 1: if(allMainCoaches != null){
+			case 1: if(allMainCoaches[position] != null){
 						msg = allMainCoaches[position].showEmployeeInfo();
 					}
 					break;
 					
-			case 2: if(allAssistantCoaches != null){
+			case 2: if(allAssistantCoaches[position] != null){
 						msg = allAssistantCoaches[position].showEmployeeInfo();
 					}
 					break;		
 			
-			case 3: if(allPlayers != null){
+			case 3: if(allPlayers[position] != null){
 						msg = allPlayers[position].showEmployeeInfo();
 					}
 					break;
 			
-			case 4: if(allTeams != null){
+			case 4: if(allTeams[position] != null){
 						msg = allTeams[position].showTeamInfo();
 					}
 					break;
@@ -297,19 +297,36 @@ public class Club{
 				space = true;
 			}
 		}
+		return msg;
 	}
 	
 	public String showAssistantCoaches(){
 		String msg = "";
 		boolean space = false;
 		
-		for(int i = 0; i < MAXIMUM_MAIN_COACHES && !space ; i++){
-			if(allMainCoaches[i] != null){
-				msg += allMainCoaches[i].showEmployeeInfo();
+		for(int i = 0; i < MAXIMUM_ASSISTANT_COACHES && !space ; i++){
+			if(allAssistantCoaches[i] != null){
+				msg += allAssistantCoaches[i].showEmployeeInfo();
 			}
 			else{
 				space = true;
 			}
 		}
+		return msg;
+	}
+	
+	public String showPlayers(){
+		String msg = "";
+		boolean space = false;
+		
+		for(int i = 0; i < MAXIMUM_PLAYERS && !space ; i++){
+			if(allMainCoaches[i] != null){
+				msg += allPlayers[i].showEmployeeInfo();
+			}
+			else{
+				space = true;
+			}
+		}
+		return msg;
 	}
 }

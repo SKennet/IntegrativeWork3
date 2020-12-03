@@ -1,6 +1,6 @@
 package model;
 
-public class Employee{
+public abstract class Employee{
 	String employeeName;
 	int id;
 	boolean state;
@@ -23,5 +23,34 @@ public class Employee{
 		msg += "Salario: $" + salary + "\n";
 		
 		return msg;
+	}
+	
+	
+	//Setters.
+	public void setId(int newId){
+		id = newId;
+	}
+	public void setName(String newName){
+		employeeName = newName;
+	}
+	public void setState(boolean newState){
+		state = newState;
+	}
+	public void setSalary(int newSalary){
+		salary = newSalary;
+	}
+	
+	//Getters.
+	public int getId(){
+		return id;
+	}
+	public String getName(){
+		return employeeName;
+	}
+	public boolean getState(){
+		return state;
+	}
+	public int getSalary(){
+		return salary;
 	}
 }

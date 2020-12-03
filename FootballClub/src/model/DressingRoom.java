@@ -18,17 +18,19 @@ public class DressingRoom{
 	}
 	
 	
+	//In the futures versions the player can be founded using his id.
 	public String addPlayer(Player playerToAdd, boolean team){
 		space = false;
+		int id = playerToAdd.id();
 		for(int i = 0; i < column && !space; i++){
 			for(int j = 0; j < row !space ; j++){
 				if(userTeam == team){
-					if(lockerRoom[i][j-1] != 1 && lockerRoom[i-1][j] != 1){
+					if(lockerRoom[i][j-1] != 0 && lockerRoom[i-1][j] != 0){
 						
 						lockerRoom[i][j+1] = 0;
 						lockerRoom[i+1][j] = 0;
 						
-						lockerRoom[i][j] = 1;
+						lockerRoom[i][j] = id;
 						
 						space = true;
 						msg = "Jugador añadido correctamente.";

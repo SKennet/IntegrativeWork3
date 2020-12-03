@@ -44,4 +44,80 @@ public class MainCoach extends Employee{
 		msg += "Su valor en el mercado es: $" + marketValue + "\n";
 		msg += "\n";
 	}
+	
+	//Getters.
+	@Override
+	public int getId(){
+		return super.getId();
+	}
+	
+	@Override
+	public int getSalary(){
+		return super.getSalary;
+	}
+	
+	@Override
+	public String getName(){
+		return super.getName();
+	}
+	
+	@Override
+	public boolean getState(){
+		return super.getState();
+	}
+	
+	public int getExperienceYears(){
+		return experienceYears;
+	}
+	public int getTeamsManaged(){
+		return teamsManaged;
+	}
+	public int getChampionshipsWinned(){
+		return championshipsWinned;
+	}
+	public double getLevel(){
+		return level;
+	}
+	public double getMarketValue(){
+		return marketValue;
+	}
+	
+	//Setters.
+	@Override
+	public void setId(int newId){
+		super.setId(newId);
+	}
+	
+	@Override
+	public void setSalary(int newSalary){
+		super.setSalary(newSalary);
+	}
+	
+	@Override
+	public void setName(String newName){
+		super.setName(newName);
+	}
+	
+	@Override
+	public void setState(boolean newState){
+		super.setState(newState);
+	}
+	
+	public void setExperienceYears(int newExperience){
+		experienceYears = newExperience;
+	}
+	public void setMarketValue(double newValue){
+		marketValue = newValue;
+	}
+	public void setLevel(double newLevel){
+		level = newLevel;
+	}
+	public void setTeamsManaged(int newTeamsManaged){
+		teamsManaged = newTeamsManaged;
+	}
+	public void setChampionshipsWinned(int newWinned){
+		championshipsWinned = newWinned;
+	}
+	
+	
 }

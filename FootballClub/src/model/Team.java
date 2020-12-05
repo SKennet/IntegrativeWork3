@@ -1,5 +1,5 @@
 package model;
-import model;
+import model.*;
 
 public class Team{
 	

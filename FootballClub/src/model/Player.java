@@ -1,13 +1,14 @@
 package model;
-import model;
+import model.*;
 
 public class Player extends Employee{
 	int shirtNum, goles, position, salary, id;
 	double markAverage, level, marketValue;
+	Team playerTeam;
 	private static final double LVL_CONSTANT = 0.9;
 	
 	
-	public Player(int shirtNum, int goles, double markAverage, int position, String name, int id, boolean state, int salary){
+	public Player(int shirtNum, int goles, double markAverage, int position, String name, int id, boolean state, int salary, Team playerTeam){
 		super(name, id, state, salary);
 		
 		this.salary = super.salary;
@@ -16,6 +17,7 @@ public class Player extends Employee{
 		this.markAverage = markAverage;
 		this.position = position;
 		this.id = id;
+		this.playerTeam = playerTeam;
 	}
 	
 	public double calculateLevel(){
@@ -106,10 +108,13 @@ public class Player extends Employee{
 		return markAverage;
 	}
 	public double getMarketValue(){
-		return calculateMarketValue();
+		return marketValue;
 	}
 	public double getLevel(){
-		return calculateLevel();
+		return level;
+	}
+	public Team getTeam(){
+		return playerTeam;
 	}
 	
 	//Setters.
@@ -150,6 +155,9 @@ public class Player extends Employee{
 	}
 	public void setMarketValue(double newValue){
 		marketValue = newValue;
+	}
+	public void setTeam(Team newTeam){
+		playerTeam = newTeam;
 	}
 	
 	

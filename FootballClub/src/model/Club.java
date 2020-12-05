@@ -1,19 +1,28 @@
 package model;
-import model;
+import model.*;
+import java.util.ArrayList;
 
 public class Club{
 	int nit;
 	String name, fundationDate;
 	
-	//Employees constants.
-	private final static int MAXIMUM_PLAYERS = 50, MAXIMUM_MAIN_COACHES = 2, MAXIMUM_ASSISTANT_COACHES = 6, MAXIMUM_TEAMS = 2;
-	
 	//Employees.
-	Players [] allPlayers = new Players [MAXIMUM_PLAYERS];
-	MainCoach [] allMainCoaches = new MainCoach [MAXIMUM_MAIN_COACHES];
-	AssistantCoach [] allAssistantCoaches = new AssistantCoach[MAXIMUM_ASSISTANT_COACHES];
-	Team [] allTeams = new Team [MAXIMUM_TEAMS];
+	ArrayList <Player> allPlayers = new ArrayPlaylist <Player>();
+	ArrayList <MainCoach> allMainCoaches = new ArrayList <MainCoach>();
+	ArrayList <AssistantCoach>  allAssistantCoaches = new ArrayList <AssistantCoach>();
+	ArrayList <Team> allTeams = new ArrayList <Team>();
 	
+	//Offices.
+	private final static int officesColumns = 6, officesRows = 6;
+	int [][] offices = new int[officesColumns][officesRows];
+	Team teamUsing1, teamUsing2;
+	
+	//Dreesing rooms.
+	private final static int dreesingRoomColumns1 = 7, dreesingRoomRows1 = 6;
+	private final static int dreesingRoomColumns12 = 7,	dreesingRoomRows2 = 7;
+	
+	int [][] dreesingRoom1 = new int [dreesingRoomColumns1][dreesingRoomRows1];
+	int [][] dreesingRoom2 = new int [dreesingRoomColumns2][dreesingRoomRows2];
 	
 	public Club(int nit, String name, String fundationDate){
 		this.nit = nit;
@@ -21,30 +30,30 @@ public class Club{
 		this.fundationDate = fundationDate;
 	}
 	
-	//Shows the info that the user it's asking for.
+	//Shows the info  that the user it's asking for.
 	public String showParticularInfo(int type, int position){
 		boolean space = false;
 		String msg = "";
 		position = position-1;
 		
 		switch(type){
-			case 1: if(allMainCoaches[position] != null){
-						msg = allMainCoaches[position].showEmployeeInfo();
+			case 1: if(allMainCoaches.size() >= position){
+						msg = allMainCoaches.get(position).showEmployeeInfo();
 					}
 					break;
 					
-			case 2: if(allAssistantCoaches[position] != null){
-						msg = allAssistantCoaches[position].showEmployeeInfo();
+			case 2: if(allAssistantCoaches.size() >= position){
+						msg = allAssistantCoaches.get(position).showEmployeeInfo();
 					}
 					break;		
 			
-			case 3: if(allPlayers[position] != null){
-						msg = allPlayers[position].showEmployeeInfo();
+			case 3: if(allPlayers.size() >= position){
+						msg = allPlayers.get(position).showEmployeeInfo();
 					}
 					break;
 			
-			case 4: if(allTeams[position] != null){
-						msg = allTeams[position].showTeamInfo();
+			case 4: if(allTeams.size() >= position){
+						msg = allTeams.get(position).showTeamInfo();
 					}
 					break;
 					
@@ -64,6 +73,7 @@ public class Club{
 	public String showAllInfo(){
 		boolean space = false;
 		String msg = "";
+		int elements = 0;
 		
 		//Club info.
 		msg = "Información del club: \n";
@@ -74,39 +84,34 @@ public class Club{
 		
 		//Teams info.
 		msg += "Información de los equipos: \n";
-		for(int i = 0; i < MAXIMUM_TEAMS ! space ; i++){
-			if(allTeams[i] != null){
-				msg += allTeams[i].showTeamInfo();
-			}
+		while(allTeams.size() >= elements){
+				msg += allTeams.get(i).showTeamInfo();		
 		}
+		elements = 0;
 		msg += "\n";
 		space = false;
 		
 		//Employees info.
 		msg += "Información de los empleados: \n";
-		for(int i = 0; i<MAXIMUM_MAIN_COACHES && !space ; i++){
-			if(allMainCoaches[i] != null){
-				msg += allMainCoaches[i].showEmployeeInfo();
-				space = true;
-			}
+		while(allPlayers.size() >= elements){
+			msg += allMainCoaches.get(elements).showEmployeeInfo();
+			elements++;
 		}
+		elements = 0;
 		msg += "\n";
 		space = false;
 		
-		for(int i = 0; i<MAXIMUM_MAIN_COACHES && !space ; i++){
-			if(allMainCoaches[i] != null){
-				msg += allMainCoaches[i].showEmployeeInfo();
-				space = true;
-			}
-		}
+		while(allMainCoaches.size() >= elements){
+				msg += allMainCoaches.get(elements).showEmployeeInfo();
+				elements++;
+		}	
+		elements = 0;
 		msg += "\n";
 		space = false;
 		
-		for(int i = 0; i<MAXIMUM_MAIN_COACHES && !space ; i++){
-			if(allMainCoaches[i] != null){
-				msg += allMainCoaches[i].showEmployeeInfo();
-				space = true;
-			}
+		while(allAssistantCoaches.size() >= elements){
+				msg += allAssistantCoaches.get(elements).showEmployeeInfo();
+				elements++;
 		}
 		msg += "\n";
 		return msg;
@@ -115,17 +120,17 @@ public class Club{
 	//This methods are for assign employees to the teams.
 	public assignPlayer(int playerPosition, int teamChoosed){
 		Player playerToAsign;
-		
+		int elements
 		//Because the arrays starts from zero.
 		playerPosition = playerPosition-1;
 		teamChoosed = teamChoosed-1;
 		
-		playerToAsign = allPlayers[playerPosition];
+		playerToAsign = allPlayers.get(playerPosition);
 		
 
-		if(allPlayers[playerPosition] != null){
-			if(allTeams[teamChoosed] != null){
-				msg = allTeams[teamChoosed].addPlayer(playerToAsign);
+		if(allPlayers.size() >= playerPosition){
+			if(allTeams.size() >= teamChoosed){
+				msg = allTeams.get(teamChoosed).addPlayer(playerToAsign);
 			}
 			else{
 				msg = "No se pudo asignar. Equipo inexistente.";
@@ -145,12 +150,12 @@ public class Club{
 		coachPosition = coachPosition-1;
 		teamChoosed = teamChoosed-1;
 		
-		coachToAsign = allMainCoaches[coachPosition];
+		coachToAsign = allMainCoaches.get(coachPosition);
 		
 		
-		if(allMainCoaches[coachPosition] != null){
-			if(allTeams[teamChoosed] != null){
-				msg = allTeams[teamChoosed].addMainCoach(coachToAsign);
+		if(allMainCoaches.size() >= coachPosition){
+			if(allTeams.size() >= teamChoosed){
+				msg = allTeams.get(teamChoosed).addMainCoach(coachToAsign);
 			}
 			else{
 				msg = "No se pudo asignar. Equipo inexistente.";
@@ -169,12 +174,12 @@ public class Club{
 		coachPosition = coachPosition-1;
 		teamChoosed = teamChoosed-1;
 		
-		coachToAsign = allAssistantCoaches[coachPosition];
+		coachToAsign = allAssistantCoaches.get(coachPosition);
 		
 		
-		if(allMainCoaches[coachPosition] != null){
-			if(allTeams[teamChoosed] != null){
-				msg = allTeams[teamChoosed].addAssistantCoach(coachToAsign);
+		if(allMainCoaches.size > coachPosition){
+			if(allTeams.size > teamChoosed){
+				msg = allTeams.get(teamChoosed).addAssistantCoach(coachToAsign);
 			}
 			else{
 				msg = "No se pudo asignar. Equipo inexistente.";
@@ -187,54 +192,30 @@ public class Club{
 	}
 	
 	//This methods are for "hiring" employees.
-	public String addPlayer(int shirtNum, int goles, double markAverage, int position){
+	public String addPlayer(int shirtNum, int goles, double markAverage, int position, String name, int id, String state, int salary){
 		String msg = "";
-		boolean space = false;
 		
-		for(int i = 0; i < MAXIMUM_PLAYERS && !space ; i++){
-			if(allPlayers[i] != null){
-				space = true;
-				allPlayers [i] = new Player(shirtNum, goles, markAverage, position);
-				msg = "Jugador agregado correctamente.";
-			}
-			else{
-				msg = "No se pudo agregar el jugador. Espacio insuficiente.";
-			}
-		}
+		allPlayers.add(new Player(shirtNum, goles, markAverage, position, name, id, state, salary));
+		msg = "Jugador agregado correctamente.";
+
 		return msg;		
 	}
 	
-	public String addMainCoach(int experienceYears, int teamsManaged, int championshipsWinned){
+	public String addMainCoach(int experienceYears, int teamsManaged, int championshipsWinned, String name, int id, String state, int salary){
 		String msg = "";
-		boolean space = false;
 		
-		for(int i = 0; i < MAXIMUM_MAIN_COACHES && !space ; i++){
-			if(allMainCoaches[i] != null){
-				space = true;
-				allMainCoaches[i] = new MainCoach(experienceYears, teamsManaged, championshipsWinned);
-				msg = "Entrenador principal añadido correctamente.";
-			}
-			else{
-				msg = "No se pudo agregar al entrenador principal. Espacio insuficiente.";
-			}
-		}
+		allMainCoaches.add(new MainCoach(experienceYears, teamsManaged, championshipsWinned, name, id, state, salary));
+		msg = "Entrenador principal añadido correctamente.";
+			
 		return msg;
 	}
 	
-	public String addAssistantCoach(int experienceYears, boolean wasPlayer, String expertise){
+	public String addAssistantCoach(int experienceYears, boolean wasPlayer, String expertise, String name, int id, String state, int salary){
 		String msg = "";
-		boolean space = false;
 		
-		for(int i = 0; i < MAXIMUM_ASSISTANT_COACHES && !space ; i++){
-			if(allAssistantCoaches[i] != null){
-				space = true;
-				allAssistantCoaches[i] = new AssistantCoach(experienceYears, wasPlayer, expertise);
-				msg = "Asistente técnico añadido correctamente.";
-			}
-			else{
-				msg = "No se pudo agregar al asistente técnico. Espacio insuficiente.";
-			}
-		}
+		allAssistantCoaches.add(new AssistantCoach(experienceYears, wasPlayer, expertise, name, id, state, salary));
+		msg = "Asistente técnico añadido correctamente.";
+
 		return msg;
 	}
 	
@@ -242,13 +223,7 @@ public class Club{
 	public String removeMainCoach(int position){
 		position = position-1;
 		
-		MainCoach [] temporalArray = new MainCoach[MAXIMUM_MAIN_COACHES];
-		
-		if(allMainCoaches[i] != allMainCoaches[position]){
-			temporalArray[i] = allMainCoaches[i];
-		}
-		
-		allMainCoaches = temporalArray;
+		allMainCoaches.get(position).setState("INACTIVO".);
 		
 		String msg = "Entrenador principal despedido exitosamente.";
 		return msg;
@@ -257,13 +232,7 @@ public class Club{
 	public String removeAssistantCoach(int position){
 		position = position-1;
 		
-		AssistantCoach [] temporalArray = new AssistantCoach[MAXIMUM_ASSISTANT_COACHES];
-		
-		if(allAssistantCoaches[i] != allAssistantCoaches[position]){
-			temporalArray[i] = allAssistantCoaches[i];
-		}
-		
-		allAssistantCoaches = temporalArray;
+		allAssistantCoaches.get(position).setState("INACTIVO.");
 		
 		String msg = "Asistente técnico despedido exitosamente.";
 		return msg;
@@ -271,14 +240,8 @@ public class Club{
 	
 	public String removePlayer(int position){
 		position = position-1;
-		
-		Player [] temporalArray = new Player[MAXIMUM_PLAYERS];
-		
-		if(allPlayers[i] != allPlayers[position]){
-			temporalArray[i] = allPlayers[i];
-		}
-		
-		allPlayers = temporalArray;
+
+		allPlayers.get(position).setState("INACTIVO.");
 		
 		String msg = "Jugador despedido exitosamente.";
 		return msg;
@@ -288,43 +251,173 @@ public class Club{
 	public String showMainCoaches(){
 		String msg = "";
 		boolean space = false;
+		int i = 0;
 		
-		for(int i = 0; i < MAXIMUM_MAIN_COACHES && !space ; i++){
-			if(allMainCoaches[i] != null){
-				msg += allMainCoaches[i].showEmployeeInfo();
-			}
-			else{
-				space = true;
-			}
-		}
+		while(allMainCoaches.size > i){
+			msg += allMainCoaches.get(i).showEmployeeInfo();
+			i++;
+		}	
 		return msg;
 	}
 	
 	public String showAssistantCoaches(){
 		String msg = "";
 		boolean space = false;
+		int i = 0;
 		
-		for(int i = 0; i < MAXIMUM_ASSISTANT_COACHES && !space ; i++){
-			if(allAssistantCoaches[i] != null){
-				msg += allAssistantCoaches[i].showEmployeeInfo();
-			}
-			else{
-				space = true;
-			}
-		}
+		while(allAssistantCoaches.size > i){
+			msg += allAssistantCoaches.get(i).showEmployeeInfo();
+			i++;
+		}	
 		return msg;
 	}
 	
 	public String showPlayers(){
 		String msg = "";
 		boolean space = false;
+		int i = 0;
 		
-		for(int i = 0; i < MAXIMUM_PLAYERS && !space ; i++){
-			if(allMainCoaches[i] != null){
-				msg += allPlayers[i].showEmployeeInfo();
+		while(allPlayers.size > i){
+			msg += allPlayers.get(i).showEmployeeInfo();
+			i++;
+		}	
+		return msg;
+	}
+
+	public String useOffices(int type, int coach){
+		String msg = "";
+		coach = coach-1;
+		Coach coachToAsign;
+		boolean space = false;
+		
+		if(type ==1){
+			coachToAsign = allMainCoaches.get(coach);
+		}
+		else{
+			coachToAsign = allAssistantCoaches.get(coach);
+		}
+		
+		for(int i = 0; i < officesColumns && !space; i++){
+			for(int j = 0; j < officesRows ; j++){
+				if(offices[i][j] == null){
+					offices[i][j] = coachToAsign;
+					space = true;
+					msg = "El entrenador pudo entrar a una oficina exitosamente.";
+				}
+				else{
+					msg = "El entrenador NO pudo entrar a ninguna oficina. Espacio insuficiente.";
+				}
 			}
-			else{
-				space = true;
+		}
+		return msg;
+	}
+	
+	public String useDreesingRooms(int player, Team playerTeam){
+		player = player-1;
+		Team teamPlayer = allPlayers.get(player).getTeam();
+		
+		//I take the id because this must be unique. And it's easier to find the players this way.
+		int playerToAdd = allPlayers.get(player).getId();
+		
+		//Dreesing room 1.
+		if(dreesingRoom1[0] == null){
+			dreesingRoom1[0] = playerToAdd;
+			teamUsing1 = teamPlayer;
+		}
+		else if(teamUsing1 == teamPlayer){
+			for(int i = 0; i < dreesingRoomColumns1 && !space; i++){
+				for(int j = 0; j < dreesingRoomRows1 ; j++){
+					if(dreesingRoom1[i][j] == null){
+						msg = "Jugador añadido correctamente al camerino 1.";
+						dreesingRoom1[i][j] = playerToAdd;
+						space = true;
+					}
+					else{
+						msg = "El jugador no pudo ser añadido al camerino 1 por falta de espacio.";
+					}
+				}
+			}
+		}
+		
+		if(dreesingRoom2[0] == null && !space){
+			dreesingRoom2[0] = playerToAdd;
+			teamUsing2 = teamPlayer;
+		}
+		else if(teamUsing2 == teamPlayer){
+			for(int i = 0; i <dreesingRoomColumns2 && !space; i++){
+				for(int j = 0; j < dreesingRoomRows2 ; j++){
+					if(dreesingRoom2[i][j] == null){
+						msg = "Jugador añadido correctamente al camerino 2.";
+						dreesingRoom2[i][j] = playerToAdd;
+						space = true;
+					}
+					else{
+						msg = "El jugador no pudo ser añadido al camerino 2 por falta de espacio.";
+					}
+				}
+			}
+		}
+		else{
+			msg = "El jugador no pudo ser agregado a ningun camerino, porque los están usando equipos distintos al suyo.";
+		}
+		return msg;
+	}
+	//Find employees methods.
+	public String findCoach(int coachToFind, int type){
+		coachToFind = coachToFind-1;
+		int coachId, officeFounded;
+		boolean finded = false;
+		String msg = "";
+		
+		if(type == 1){
+			coachId = allMainCoaches.get(coachToFind).getId();
+		}
+		else{
+			coachId = allAssistantCoaches.get(coachToFind).getId();
+		}
+		
+		for(int i = 0; i < officesColumns && !founded; i++;){
+			for(int j = 0; j <officesRows ; j++){
+				officeFounded ++;
+				if(offices[i][j] == coachId){
+					msg = "Entrenador encontrado en la oficina [" + i + "]" + "[" + j + "]" + " , es decir, en la oficina: " + officeFounded;
+					founded = true;
+				}
+				else{
+					msg = "El entrenador no se encuentra en ninguna oficina.";
+				}
+			}
+		}
+		return msg;
+	}
+	
+	public String findPlayers(int player){
+		player = player-1;
+		playerToFind = allPlayers.get(player).getId();
+		int placeFounded = 0;
+		String msg = "";
+		boolean founded = false;
+		
+		for(int i = 0; i < dreesingRoomColumns1 && ! founded; i++){
+			for(int j = 0; j < dreesingRoomRows1 ; j++){
+				placeFounded++;
+				if(dreesingRoom1[i][j] == playerToFind){
+					msg = "Jugador encontrado en la posición [" + i + "] [" + j +"], es decir, en el espacio: " + placeFounded + ". Del camerino 1." ;
+					founded = true;
+				}
+			}
+		}
+		
+		for(int i = 0; i < dreesingRoomColumns2 && ! founded; i++){
+			for(int j = 0; j < dreesingRoomRows2 ; j++){
+				placeFounded++;
+				if(dreesingRoom2[i][j] == playerToFind){
+					msg = "Jugador encontrado en la posición [" + i + "] [" + j +"], es decir, en el espacio: " + placeFounded + ". Del camerino 2." ;
+					founded = true;
+				}
+				else{
+					msg = "El jugador no se encuentra en ningun camerino.";
+				}
 			}
 		}
 		return msg;

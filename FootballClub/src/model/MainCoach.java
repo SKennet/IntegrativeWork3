@@ -1,5 +1,5 @@
 package model;
-import model;
+import model.*;
 
 public class MainCoach extends Employee{
 	int experienceYears, teamsManaged, championshipsWinned, salary;
@@ -7,7 +7,7 @@ public class MainCoach extends Employee{
 	String name;
 	
 	
-	public MainCoach(int experienceYears, int teamsManaged, int championshipsWinned, String name, int id, boolean state, int salary){
+	public MainCoach(int experienceYears, int teamsManaged, int championshipsWinned, String name, int id, String state, int salary){
 		super(name, id, state, salary);
 		
 		this.name = name;

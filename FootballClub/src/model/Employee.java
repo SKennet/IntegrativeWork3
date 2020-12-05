@@ -3,10 +3,10 @@ package model;
 public abstract class Employee{
 	String employeeName;
 	int id;
-	boolean state;
+	String state;
 	int salary;
 	
-	public Employee(String employeeName, int id, boolean state, int salary){
+	public Employee(String employeeName, int id, String state, int salary){
 		this.employeeName = employeeName;
 		this.id = id;
 		this.state = state;
@@ -33,7 +33,7 @@ public abstract class Employee{
 	public void setName(String newName){
 		employeeName = newName;
 	}
-	public void setState(boolean newState){
+	public void setState(String newState){
 		state = newState;
 	}
 	public void setSalary(int newSalary){
@@ -47,7 +47,7 @@ public abstract class Employee{
 	public String getName(){
 		return employeeName;
 	}
-	public boolean getState(){
+	public String getState(){
 		return state;
 	}
 	public int getSalary(){

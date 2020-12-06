@@ -1,5 +1,6 @@
 package model;
 import model.*;
+import java.util.ArrayList;
 
 public class Team{
 	
@@ -49,7 +50,7 @@ public class Team{
 		return msg;
 	}
 	
-	public String addPlayers(Player player){
+	public String addPlayer(Player player){
 		String msg = "";
 		boolean space = false;
 		

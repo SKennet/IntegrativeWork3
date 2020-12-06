@@ -1,14 +1,14 @@
 package model;
 import model.*;
 
-public class MainCoach extends Employee{
+public class MainCoach extends Coach implements PriceAndLevel{
 	int experienceYears, teamsManaged, championshipsWinned, salary;
 	double marketValue, level;
 	String name;
 	
 	
 	public MainCoach(int experienceYears, int teamsManaged, int championshipsWinned, String name, int id, String state, int salary){
-		super(name, id, state, salary);
+		super(name, id, state, salary, experienceYears);
 		
 		this.name = name;
 		this.salary = super.salary;
@@ -17,16 +17,38 @@ public class MainCoach extends Employee{
 		this.championshipsWinned = championshipsWinned;
 		
 		this.level = calculateLevel();
-		this.marketValue = calculateMarketValue();
+		this.marketValue = calculatePrice();
 	}
 	
-	public double calculateLevel(){		
-		level = 5 + (championshipsWinned/10);
-		return level;		
+	@Override
+	public double calculateLevel(){
+		double level = 5+(championshipsWinned/10);
+		return level;
 	}
 	
-	public double calculateMarketValue(){
-		marketValue = (salary*10) + (experienceYears * 100) + (championshipsWinned * 50);
+	@Override
+	public void updateLevel(){
+		level=calculateLevel();
+	}
+	
+	@Override
+	public double getLevel(){
+		return level;
+	}
+	
+	@Override
+	public double calculatePrice(){
+		double price = (getSalary()*10)+(getExperienceYears()*100)+(getChampionshipsWinned()*50);
+		return price;
+	}
+	
+	@Override
+	public void updatePrice(){
+		marketValue=calculatePrice();
+	}
+	
+	@Override
+	public double getPrice(){
 		return marketValue;
 	}
 	
@@ -34,15 +56,16 @@ public class MainCoach extends Employee{
 	public String showEmployeeInfo(){
 		
 		calculateLevel();
-		calculateMarketValue();
+		calculatePrice();
 		
 		String msg = super.showEmployeeInfo();
-		msg += "Años de experiencia: " + experienceYears + "\n";
 		msg += "Ha dirijido " + teamsManaged + " equipos."+ "\n";
 		msg += "Ha ganado " + championshipsWinned + " torneos."+ "\n";
 		msg += "Su nivel es: " + level + "\n";
 		msg += "Su valor en el mercado es: $" + marketValue + "\n";
 		msg += "\n";
+		
+		return msg;
 	}
 	
 	//Getters.
@@ -53,7 +76,7 @@ public class MainCoach extends Employee{
 	
 	@Override
 	public int getSalary(){
-		return super.getSalary;
+		return super.getSalary();
 	}
 	
 	@Override
@@ -62,24 +85,19 @@ public class MainCoach extends Employee{
 	}
 	
 	@Override
-	public boolean getState(){
+	public String getState(){
 		return super.getState();
 	}
-	
+	@Override
 	public int getExperienceYears(){
 		return experienceYears;
 	}
+	
 	public int getTeamsManaged(){
 		return teamsManaged;
 	}
 	public int getChampionshipsWinned(){
 		return championshipsWinned;
-	}
-	public double getLevel(){
-		return level;
-	}
-	public double getMarketValue(){
-		return marketValue;
 	}
 	
 	//Setters.
@@ -99,13 +117,15 @@ public class MainCoach extends Employee{
 	}
 	
 	@Override
-	public void setState(boolean newState){
+	public void setState(String newState){
 		super.setState(newState);
 	}
 	
+	@Override
 	public void setExperienceYears(int newExperience){
 		experienceYears = newExperience;
 	}
+	
 	public void setMarketValue(double newValue){
 		marketValue = newValue;
 	}

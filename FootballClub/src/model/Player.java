@@ -1,60 +1,90 @@
 package model;
 import model.*;
 
-public class Player extends Employee{
-	int shirtNum, goles, position, salary, id;
+public class Player extends Employee implements PriceAndLevel{
+	int shirtNum, goals, position, salary, id;
 	double markAverage, level, marketValue;
 	Team playerTeam;
 	private static final double LVL_CONSTANT = 0.9;
 	
 	
-	public Player(int shirtNum, int goles, double markAverage, int position, String name, int id, String state, int salary, Team playerTeam){
+	public Player(int shirtNum, int goals, double markAverage, int position, String name, int id, String state, int salary){
 		super(name, id, state, salary);
 		
 		this.salary = super.salary;
 		this.shirtNum = shirtNum;
-		this.goles = goles;
+		this.goals = goals;
 		this.markAverage = markAverage;
 		this.position = position;
 		this.id = id;
 		this.playerTeam = playerTeam;
 	}
 	
+	@Override
 	public double calculateLevel(){
-		level = 0;
-		
-		if(position == 1){
-			level = (markAverage) * (LVL_CONSTANT);
-		}
-		else if(position == 2){
-			level = (markAverage*LVL_CONSTANT) + (goles/100);
-		}
-		else if(position == 3){
-			level = (markAverage*LVL_CONSTANT) + (goles/90);
-		}
-		else if(position == 4){
-			level = (markAverage*LVL_CONSTANT) + (goles/80);
+		double level;
+		switch(position){
+			case 1:
+				level = markAverage*0.9;
+				break;
+			case 2:
+				level = (markAverage*0.9)+(goals/100);
+				break;
+			case 3:
+				level = (markAverage*0.9)+(goals/90);
+				break;
+			case 4:
+				level = (markAverage*0.9)+(goals/80);
+				break;
+			default:
+				level=0;
+				break;
 		}
 		return level;
 	}
 	
-	public double calculateMarketValue(){
-		marketValue = 0;
-		
-		if(position == 1){
-			marketValue = (salary * 12) + (markAverage*150);
-		}
-		else if(position == 2){
-			marketValue = (salary * 13) + (markAverage*125) + (goles*100);
-		}
-		else if(position == 3){
-			marketValue = (salary * 14) + (markAverage*135) + (goles*125);
-		}
-		else if(position == 4){
-			marketValue = (salary * 15) + (markAverage*145) + (goles*150);
-		}
-		
+	
+	@Override
+	public double getLevel(){
+		return level;
+	}
+	
+	@Override
+	public void updateLevel(){
+		level=calculateLevel();
+	}
+
+	@Override
+	public double getPrice(){
 		return marketValue;
+	}
+	
+	@Override
+	public void updatePrice(){
+		marketValue=calculatePrice();
+	}
+	
+	@Override
+	public double calculatePrice(){
+		double price;
+		switch(position){
+			case 1:
+				price = (getSalary()*12)+(getMarkAverage()*150);
+				break;
+			case 2:
+				price = (getSalary()*13)+(getMarkAverage()*125)+(getGoals()*100);
+				break;
+			case 3:
+				price = (getSalary()*14)+(getMarkAverage()*135)+(getGoals()*125);
+				break;
+			case 4:
+				price = (getSalary()*15)+(getMarkAverage()*145)+(getGoals()*150);
+				break;
+			default:
+				price=0;
+				break;
+		}
+		return price;
 	}
 	
 	@Override
@@ -62,16 +92,18 @@ public class Player extends Employee{
 		
 		//This it's to update the level and marketValue.
 		calculateLevel();
-		calculateMarketValue();
+		calculatePrice();
 		
 		String msg = super.showEmployeeInfo();
 		msg += "Su número de camiseta es: " + shirtNum + "\n";
-		msg += "Ha hecho: " + goles + " goles."+ "\n";
+		msg += "Ha hecho: " + goals + " goals."+ "\n";
 		msg += "Su calificación promedio es:  " + markAverage + "\n";
 		msg += "Su posición es: " + position + "\n";
 		msg += "Su nivel es: " + level + "\n";
 		msg += "Su valor en el mercado es: $" + marketValue + "\n";
 		msg += "\n";
+		
+		return msg;
 	}
 	
 	//Getters.
@@ -82,7 +114,7 @@ public class Player extends Employee{
 	
 	@Override
 	public int getSalary(){
-		return super.getSalary;
+		return super.getSalary();
 	}
 	
 	@Override
@@ -91,15 +123,15 @@ public class Player extends Employee{
 	}
 	
 	@Override
-	public boolean getState(){
+	public String getState(){
 		return super.getState();
 	}
 	
 	public int getShirtNum(){
 		return shirtNum;
 	}
-	public int getGoles(){
-		return goles;
+	public int getGoals(){
+		return goals;
 	}
 	public int getPosition(){
 		return position;
@@ -107,12 +139,7 @@ public class Player extends Employee{
 	public double getMarkAverage(){
 		return markAverage;
 	}
-	public double getMarketValue(){
-		return marketValue;
-	}
-	public double getLevel(){
-		return level;
-	}
+
 	public Team getTeam(){
 		return playerTeam;
 	}
@@ -134,7 +161,7 @@ public class Player extends Employee{
 	}
 	
 	@Override
-	public void setState(boolean newState){
+	public void setState(String newState){
 		super.setState(newState);
 	}
 	
@@ -142,7 +169,7 @@ public class Player extends Employee{
 		shirtNum = newShirt;
 	}
 	public void setGoles(int newGoles){
-		goles = newGoles;
+		goals = newGoles;
 	}
 	public void setPosition(int newPosition){
 		position = newPosition;

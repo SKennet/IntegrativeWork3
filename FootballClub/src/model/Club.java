@@ -7,7 +7,7 @@ public class Club{
 	String name, fundationDate;
 	
 	//Employees.
-	ArrayList <Player> allPlayers = new ArrayPlaylist <Player>();
+	ArrayList <Player> allPlayers = new ArrayList <Player>();
 	ArrayList <MainCoach> allMainCoaches = new ArrayList <MainCoach>();
 	ArrayList <AssistantCoach>  allAssistantCoaches = new ArrayList <AssistantCoach>();
 	ArrayList <Team> allTeams = new ArrayList <Team>();
@@ -15,20 +15,27 @@ public class Club{
 	
 	//Offices.
 	private final static int officesColumns = 6, officesRows = 6;
-	int [][] offices = new int[officesColumns][officesRows];
-	Team teamUsing1, teamUsing2;
+	int[][] offices = new int[officesColumns][officesRows];
+	
 	
 	//Dreesing rooms.
+	Team teamUsing1, teamUsing2;
 	private final static int dreesingRoomColumns1 = 7, dreesingRoomRows1 = 6;
-	private final static int dreesingRoomColumns12 = 7,	dreesingRoomRows2 = 7;
+	private final static int dreesingRoomColumns2 = 7,	dreesingRoomRows2 = 7;
 	
-	int [][] dreesingRoom1 = new int [dreesingRoomColumns1][dreesingRoomRows1];
-	int [][] dreesingRoom2 = new int [dreesingRoomColumns2][dreesingRoomRows2];
+	int[][] dreesingRoom1 = new int[dreesingRoomColumns1][dreesingRoomRows1];
+	int[][] dreesingRoom2 = new int[dreesingRoomColumns2][dreesingRoomRows2];
+
+	
 	
 	public Club(int nit, String name, String fundationDate){
 		this.nit = nit;
 		this.name = name;
 		this.fundationDate = fundationDate;
+		
+		offices[0][0] = 0;
+		dreesingRoom1[0][0] = 0;
+		dreesingRoom2[0][0] = 0;
 	}
 	
 	//Shows the info  that the user it's asking for.
@@ -38,7 +45,8 @@ public class Club{
 		int elements = 0;
 		
 		switch(type){
-			case 1: while(allMainCoaches.size() > elements){
+			case 1: 
+					while(allMainCoaches.size() > elements){
 						msg += allMainCoaches.get(elements).showEmployeeInfo();
 						elements++;
 					}
@@ -47,7 +55,8 @@ public class Club{
 					}
 					break;
 					
-			case 2: while(allAssistantCoaches.size() > elements){
+			case 2: 
+					while(allAssistantCoaches.size() > elements){
 						msg += allAssistantCoaches.get(elements).showEmployeeInfo();
 						elements++;
 					}
@@ -56,7 +65,8 @@ public class Club{
 					}
 					break;		
 			
-			case 3: while(allPlayers.size() > elements){
+			case 3: 
+					while(allPlayers.size() > elements){
 						msg += allPlayers.get(elements).showEmployeeInfo();
 						elements++;
 					}
@@ -65,7 +75,8 @@ public class Club{
 					}
 					break;
 			
-			case 4: while(allTeams.size() > elements){
+			case 4: 
+					while(allTeams.size() > elements){
 						msg += allTeams.get(elements).showTeamInfo();
 						elements++;
 					}
@@ -74,14 +85,16 @@ public class Club{
 					}
 					break;
 					
-			case 5:	msg = "Información del club: \n";
+			case 5:	
+				msg = "Información del club: \n";
 					msg += "Nit: " + nit + "\n";
 					msg += "Nombre: " + name + "\n";
 					msg += "Fecha de fundación:" + fundationDate + "\n";
 					msg += "\n";	
 					break;
-			
-			default: msg = "Tipo de información inexistente. Número inválido.";
+					
+			default: 
+					msg = "Tipo de información inexistente. Número inválido.";
 					break;
 		}
 		return msg;
@@ -103,7 +116,8 @@ public class Club{
 		//Teams info.
 		msg += "Información de los equipos: \n";
 		while(allTeams.size() >= elements){
-				msg += allTeams.get(i).showTeamInfo();		
+				msg += allTeams.get(elements).showTeamInfo();	
+				elements++;
 		}
 		elements = 0;
 		msg += "\n";
@@ -135,10 +149,16 @@ public class Club{
 		return msg;
 	}
 	
+	public String addTeam(String name){
+		allTeams.add(new Team(name));
+		String msg = "Equipo creado exitosamente.";
+		return msg;
+	}
 	//This methods are for assign employees to the teams.
-	public assignPlayer(int playerPosition, int teamChoosed){
+	public String assignPlayer(int playerPosition, int teamChoosed){
 		Player playerToAsign;
-		int elements
+		int elements;
+		String msg = "";
 		//Because the arrays starts from zero.
 		playerPosition = playerPosition-1;
 		teamChoosed = teamChoosed-1;
@@ -155,7 +175,7 @@ public class Club{
 			}
 		}
 		else{
-			msg = "No se pudo asignar. Empleado inexistente." 
+			msg = "No se pudo asignar. Empleado inexistente.";
 		}
 		
 		return msg;
@@ -163,6 +183,7 @@ public class Club{
 	
 	public String assignMainCoach(int coachPosition, int teamChoosed){
 		MainCoach coachToAsign;
+		String msg = "";
 		
 		//Because the arrays starts from zero.
 		coachPosition = coachPosition-1;
@@ -180,14 +201,14 @@ public class Club{
 			}
 		}
 		else{
-			msg = "No se pudo asignar. Empleado inexistente." 
+			msg = "No se pudo asignar. Empleado inexistente."; 
 		}
 		return msg;
 	}
 	
 	public String assignAssistantCoach(int coachPosition, int teamChoosed){
 		AssistantCoach coachToAsign;
-		
+		String msg = "";
 		//Because the arrays starts from zero.
 		coachPosition = coachPosition-1;
 		teamChoosed = teamChoosed-1;
@@ -195,8 +216,8 @@ public class Club{
 		coachToAsign = allAssistantCoaches.get(coachPosition);
 		
 		
-		if(allMainCoaches.size > coachPosition){
-			if(allTeams.size > teamChoosed){
+		if(allMainCoaches.size() > coachPosition){
+			if(allTeams.size() > teamChoosed){
 				msg = allTeams.get(teamChoosed).addAssistantCoach(coachToAsign);
 			}
 			else{
@@ -204,7 +225,7 @@ public class Club{
 			}
 		}
 		else{
-			msg = "No se pudo asignar. Empleado inexistente." 
+			msg = "No se pudo asignar. Empleado inexistente.";
 		}
 		return msg;
 	}
@@ -230,8 +251,13 @@ public class Club{
 	
 	public String addAssistantCoach(int experienceYears, String wasPlayer, String expertise, String name, int id, String state, int salary){
 		String msg = "";
+		boolean player = false;
 		
-		allAssistantCoaches.add(new AssistantCoach(experienceYears, wasPlayer, expertise, name, id, state, salary));
+		if(wasPlayer.equalsIgnoreCase("sí")){
+			player = true;
+		}
+		
+		allAssistantCoaches.add(new AssistantCoach(experienceYears, player, expertise, name, id, state, salary));
 		msg = "Asistente técnico añadido correctamente.";
 
 		return msg;
@@ -241,7 +267,7 @@ public class Club{
 	public String removeMainCoach(int position){
 		position = position-1;
 		
-		allMainCoaches.get(position).setState("INACTIVO".);
+		allMainCoaches.get(position).setState("INACTIVO.");
 		
 		String msg = "Entrenador principal despedido exitosamente.";
 		return msg;
@@ -271,7 +297,7 @@ public class Club{
 		boolean space = false;
 		int i = 0;
 		
-		while(allMainCoaches.size > i){
+		while(allMainCoaches.size() > i){
 			msg += allMainCoaches.get(i).showEmployeeInfo();
 			i++;
 		}	
@@ -283,7 +309,7 @@ public class Club{
 		boolean space = false;
 		int i = 0;
 		
-		while(allAssistantCoaches.size > i){
+		while(allAssistantCoaches.size() > i){
 			msg += allAssistantCoaches.get(i).showEmployeeInfo();
 			i++;
 		}	
@@ -295,35 +321,48 @@ public class Club{
 		boolean space = false;
 		int i = 0;
 		
-		while(allPlayers.size > i){
+		while(allPlayers.size() > i){
 			msg += allPlayers.get(i).showEmployeeInfo();
 			i++;
 		}	
 		return msg;
 	}
-
+	
+	public String showTeams(){
+		String msg = "";
+		int i = 0;
+		while(allTeams.size() > i){
+			msg += allTeams.get(i).showTeamInfo();
+			i++;
+		}
+		return msg;
+	}
+	
+	//Use instalations methods.
 	public String useOffices(int type, int coach){
 		String msg = "";
 		coach = coach-1;
-		Coach coachToAsign;
+		int coachToAsign;
 		boolean space = false;
 		
 		if(type ==1){
-			coachToAsign = allMainCoaches.get(coach);
+			coachToAsign = allMainCoaches.get(coach).getId();
 		}
 		else{
-			coachToAsign = allAssistantCoaches.get(coach);
+			coachToAsign = allAssistantCoaches.get(coach).getId();
 		}
 		
 		for(int i = 0; i < officesColumns && !space; i++){
-			for(int j = 0; j < officesRows ; j++){
-				if(offices[i][j] == null){
+			for(int j = 0; j < officesRows && !space; j++){
+				if(offices[i][j] == 0){
 					offices[i][j] = coachToAsign;
+					offices[i][j+1] = 1;
+					offices[i+1][j] = 1;
 					space = true;
 					msg = "El entrenador pudo entrar a una oficina exitosamente.";
 				}
-				else{
-					msg = "El entrenador NO pudo entrar a ninguna oficina. Espacio insuficiente.";
+				else if(space != true){
+					msg += "El entrenador NO pudo entrar a ninguna oficina. Espacio insuficiente.";
 				}
 			}
 		}
@@ -333,20 +372,28 @@ public class Club{
 	public String useDreesingRooms(int player, Team playerTeam){
 		player = player-1;
 		Team teamPlayer = allPlayers.get(player).getTeam();
+		String msg = "";
+		boolean space = false;
 		
 		//I take the id because this must be unique. And it's easier to find the players this way.
 		int playerToAdd = allPlayers.get(player).getId();
 		
 		//Dreesing room 1.
-		if(dreesingRoom1[0] == null){
-			dreesingRoom1[0] = playerToAdd;
+		if(dreesingRoom1[0][0] == 0){
+			dreesingRoom1[0][0] = playerToAdd;
 			teamUsing1 = teamPlayer;
 		}
 		else if(teamUsing1 == teamPlayer){
 			for(int i = 0; i < dreesingRoomColumns1 && !space; i++){
 				for(int j = 0; j < dreesingRoomRows1 ; j++){
-					if(dreesingRoom1[i][j] == null){
+					if(dreesingRoom1[i][j] == 0){
 						msg = "Jugador añadido correctamente al camerino 1.";
+						if(i == 7){
+							dreesingRoom1[i][j+1] = 1;
+						}
+						else{
+							dreesingRoom1[i+1][j+1] = 1;
+						}
 						dreesingRoom1[i][j] = playerToAdd;
 						space = true;
 					}
@@ -357,15 +404,27 @@ public class Club{
 			}
 		}
 		
-		if(dreesingRoom2[0] == null && !space){
-			dreesingRoom2[0] = playerToAdd;
+		if(dreesingRoom2[0][0] == 0 && !space){
+			dreesingRoom2[0][0] = playerToAdd;
 			teamUsing2 = teamPlayer;
 		}
 		else if(teamUsing2 == teamPlayer){
 			for(int i = 0; i <dreesingRoomColumns2 && !space; i++){
 				for(int j = 0; j < dreesingRoomRows2 ; j++){
-					if(dreesingRoom2[i][j] == null){
+					if(dreesingRoom2[i][j] == 0){
 						msg = "Jugador añadido correctamente al camerino 2.";
+						if(i == 7 && j != 7){
+							dreesingRoom2[i][j+1] = 1;
+						}
+						else if(i == 7 && j == 7){
+							;
+						}
+						else if(i != 7 && j ==7){
+							dreesingRoom2[i+1][j] = 1;
+						}
+						else{
+							dreesingRoom2[i+1][j+1] = 1;
+						}
 						dreesingRoom2[i][j] = playerToAdd;
 						space = true;
 					}
@@ -380,11 +439,12 @@ public class Club{
 		}
 		return msg;
 	}
+	
 	//Find employees methods.
 	public String findCoach(int coachToFind, int type){
 		coachToFind = coachToFind-1;
-		int coachId, officeFounded;
-		boolean finded = false;
+		int coachId = 0, officeFounded = 0;
+		boolean founded = false;
 		String msg = "";
 		
 		if(type == 1){
@@ -394,8 +454,8 @@ public class Club{
 			coachId = allAssistantCoaches.get(coachToFind).getId();
 		}
 		
-		for(int i = 0; i < officesColumns && !founded; i++;){
-			for(int j = 0; j <officesRows ; j++){
+		for(int i = 0; i < officesColumns && !founded; i++){
+			for(int j = 0; j < officesRows && !founded; j++){
 				officeFounded ++;
 				if(offices[i][j] == coachId){
 					msg = "Entrenador encontrado en la oficina [" + i + "]" + "[" + j + "]" + " , es decir, en la oficina: " + officeFounded;
@@ -409,9 +469,9 @@ public class Club{
 		return msg;
 	}
 	
-	public String findPlayers(int player){
+	public String findPlayer(int player){
 		player = player-1;
-		playerToFind = allPlayers.get(player).getId();
+		int playerToFind = allPlayers.get(player).getId();
 		int placeFounded = 0;
 		String msg = "";
 		boolean founded = false;
@@ -444,6 +504,7 @@ public class Club{
 	public String updateMainCoachInfo(int coach, int experienceYears, int teamsManaged, int championshipsWinned, String name, int id, int salary){
 		coach = coach-1;
 		String msg = "";
+		MainCoach coachToUpdate;
 		if(allMainCoaches.size() > coach){
 			coachToUpdate = allMainCoaches.get(coach);
 			
@@ -464,11 +525,17 @@ public class Club{
 	public String updateAssistantCoachInfo(int coach, int experienceYears, String wasPlayer, String expertise, String name, int id, int salary){
 		coach = coach-1;
 		String msg = "";
+		AssistantCoach coachToUpdate;
+		boolean player = false;
+		if(wasPlayer.equalsIgnoreCase("sí")){
+			player = true;
+		}
+		
 		if(allAssistantCoaches.size() > coach){
 			coachToUpdate = allAssistantCoaches.get(coach);
 			
 			coachToUpdate.setExperienceYears(experienceYears);
-			coachToUpdate.setWasPlayer(wasPlayer);
+			coachToUpdate.setWasPlayer(player);
 			coachToUpdate.setExpertise(expertise);
 			coachToUpdate.setName(name);
 			coachToUpdate.setId(id);
@@ -484,8 +551,9 @@ public class Club{
 	public String updatePlayerInfo(int player, int shirtNum, int goles, double markAverage, int position, String name, int id, int salary){
 		player = player-1;
 		String msg = "";
+		Player playerToUpdate;
 		
-		if(allPlayers.size() > coach){
+		if(allPlayers.size() > player){
 			playerToUpdate = allPlayers.get(player);
 			
 			playerToUpdate.setShirtNum(shirtNum);
@@ -503,8 +571,8 @@ public class Club{
 		return msg;
 	}
 	
-	public String createAlineation(String date, String tactic, String formation){
-		allAlineations.add(new Alineation(date, tactic, formation))
+	public String addAlineation(String date, String tactic, String formation){
+		allAlineations.add(new Alineation(date, tactic, formation));
 		String msg = "Formación añadida correctamente.";
 		return msg;
 	}
@@ -512,9 +580,10 @@ public class Club{
 	public String readAlineation(String date){
 		String msg = "";
 		int [] formationFounded;
+		boolean founded = false;
 		
 		for(int i = 0; i < allAlineations.size() && !founded; i++ ){
-			if(allAlineations.get(i).getDate.equals(date)){
+			if(allAlineations.get(i).getDate().equals(date)){
 				formationFounded = allAlineations.get(i).readFormation();
 				msg = formationFounded[0] + "-" + formationFounded[1] + "-" + formationFounded[2];
 			}

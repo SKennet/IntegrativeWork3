@@ -10,54 +10,16 @@ public class Alineation{
 		createFormationMatrix(formatFormation);
 	}
 	
-	public String formatStringAlineation(int [][] formationToChange){
-		int defenders;
-		int flyers;
-		int forwards;
-		
-		for(int i = 0 ; i < 7 ; i++){
-			if(formationToChange[2][i] == 1){
-				defenders++;
-			}
-		}
-		
-		for(int i = 0 ; i < 7 ; i++){
-			if(formationToChange[5][i] == 1){
-				flyers++;
-			}
-		}
-		
-		for(int i = 0 ; i < 7 ; i++){
-			if(formationToChange[9][i] == 1){
-				forwards++;
-			}
-		}
-		String msg = defenders + "-" + flyers + "-" + forwards;
-		return msg;
-	}
-	
-	/**
-	Converts a String with the formation to an array of integers in order to facilitate the following operations<br>
-	<b> pre: </b> <br>
-	<b> post: </b> Returns an array of integers with the formation of the players <br>
-	@param formation String that indicates the formation. Must be an String with numbers separated by "-". The minimum is 3, the maximum is 6
-	@return playersPerRow
-	*/
+
 	public int[] getPlayersPerRow(String formation){
-		String aux = formation.split("-");
+		String [] aux = formation.split("-");
 		int[] playersPerRow = new int[aux.length];
 		for(int i=0;i<aux.length;i++){
-			playersPerRow[i]=(int) aux[i];
+			playersPerRow[i]= Integer.parseInt(aux[i]);
 		}
 		return playersPerRow;
 	}
 
-	/**
-	Creates the formation matrix<br>
-	<b> pre: </b> <br>
-	<b> post: </b> The class now has a formation matrix based on the information the user gave <br>
-	@param formation String that indicates the formation. Must be an String with numbers separated by "-". The minimum is 3, the maximum is 6
-	*/
 	public void createFormationMatrix(String formation){
 		int[] formationIndicator = getPlayersPerRow(formation);
 		switch(formationIndicator.length){
@@ -90,13 +52,6 @@ public class Alineation{
 		}
 	}
 
-	/**
-	Organizes the players according to the row they should be in<br>
-	<b> pre: </b> <br>
-	<b> post: </b> Players are ordered in their respective row in the matrix <br>
-	@param rowIndicator Int that indicates the row in which the players are
-	@param playersPerRow Int that indicates the number of players that are for each row
-	*/
 	public void organizeRows(int rowIndicator,int playersPerRow){
 		
 		switch(playersPerRow){
@@ -138,7 +93,6 @@ public class Alineation{
 				}
 				break;
 		}
-		return formationMatrix;
 	}
 
 	public int [] readFormation(){
@@ -146,21 +100,21 @@ public class Alineation{
 		String msg = "";
 		int [] formationToMedia = new int [3];
 		
-		for(int i = 1; i < 4 ; i++{
+		for(int i = 1; i < 4 ; i++){
 			for(int j = 0; j < 7 ; j++){
 				if(formationMatrix[i][j] == 1){
 					formationToMedia[0] += 1;
 				} 
 			}
 		}
-		for(int i = 4; i < 7 ; i++{
+		for(int i = 4; i < 7 ; i++){
 			for(int j = 0; j < 7 ; j++){
 				if(formationMatrix[i][j] == 1){
 					formationToMedia[1] += 1;
 				} 
 			}
 		}
-		for(int i = 7; i < 10 ; i++{
+		for(int i = 7; i < 10 ; i++){
 			for(int j = 0; j < 7 ; j++){
 				if(formationMatrix[i][j] == 1){
 					formationToMedia[2] += 1;
@@ -168,5 +122,9 @@ public class Alineation{
 			}
 		}
 		return formationToMedia;
+	}
+
+	public String getDate(){
+		return date;
 	}
 }

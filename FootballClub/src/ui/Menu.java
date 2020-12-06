@@ -11,12 +11,22 @@ public class Menu {
 		boolean clubCreated = false, finished = false;
 		
 		//Employees variables.
-		int salary, id, experienceYears, teamsManaged, championshipsWinned;
-		String state;
+		int salary, id, experienceYears, teamsManaged, championshipsWinned, goles, shirtNum, position;
+		String state, wasPlayer, expertice;
+		double markAverage;
+		
+		//Team variables.
+		int teamChoosed;
+		
+		//Show variables.
+		int typeChoosed;
 		
 		//Club variables.
 		int nit;
 		String fundationDate;
+		
+		//Alineation variables.
+		String formation, date, tactic;
 		
 		while(!finished){
 			System.out.println("Si desea crear un equipo, dígite 1.");
@@ -38,19 +48,15 @@ public class Menu {
 			System.out.println("Si desea actualizar la información de un jugador, dígite 13.");
 			System.out.println("");
 			System.out.println("Si desea mostrar toda la información, dígite 14.");
-			System.out.println("Si desea mostrar la información de un entrenador principal, dígite 15.");
-			System.out.println("Si desea mostrar la información de un asistente técnico, dígite 16.");
-			System.out.println("Si desea mostrar la información de un jugador, dígite 17.");
-			System.out.println("Si desea mostrar la información del club, dígite 18.");
-			System.out.println("Si desea mostrar la información de las instalaciones, dígite 19.");
+			System.out.println("Si desea mostrar una información en particular (solo entrenadores principales, asistentes, etc.), dígite 15.");
 			System.out.println("");
-			System.out.println("Si desea agregar una alineación a un equipo, dígite 20.");
+			System.out.println("Si desea agregar una alineación a un equipo, dígite 16.");
 			System.out.println("");
-			System.out.println("Si desea ubicar un entrenador en alguna oficina, dígite 21.");
-			System.out.println("Si desea ubicar un jugador en algun camerino, dígite 22.");
+			System.out.println("Si desea ubicar un entrenador en alguna oficina, dígite 17.");
+			System.out.println("Si desea ubicar un jugador en algun camerino, dígite 18.");
 			System.out.println("");
-			System.out.println("Si desea buscar un entrenador en las oficinas, dígite 23.");
-			System.out.println("Si desea buscar un jugador en los camerinos, dígite 24.");
+			System.out.println("Si desea buscar un entrenador en las oficinas, dígite 19.");
+			System.out.println("Si desea buscar un jugador en los camerinos, dígite 20.");
 			System.out.println("");
 			System.out.println("Si desea cerrar el programa, dígite 0.");
 			System.out.println("");
@@ -75,9 +81,9 @@ public class Menu {
 					case 2:	
 							System.out.println("Por favor, ingrese el nombre.");
 							name = input.nextLine();
-							System.out.println("Por favor ingrese el salario.");
+							System.out.println("Por favor, ingrese el salario.");
 							salary = input.nextInt();
-							System.out.println("Por favor ingrese la identificación. Recuerde que este número es único.");
+							System.out.println("Por favor, ingrese la identificación. Recuerde que este número es único.");
 							id = input.nextInt();
 							System.out.println("Por favor, ingrese los años de experiencia.");
 							experienceYears = input.nextInt();
@@ -91,43 +97,92 @@ public class Menu {
 					case 3:
 							System.out.println("Por favor, ingrese el nombre.");
 							name = input.nextLine();
-							System.out.println("Por favor ingrese el salario.");
+							System.out.println("Por favor, ingrese el salario.");
 							salary = input.nextInt();
-							System.out.println("Por favor ingrese la identificación. Recuerde que este número es único.");
+							System.out.println("Por favor, ingrese la identificación. Recuerde que este número es único.");
 							id = input.nextInt();
+							System.out.println("Por favor, ingrese los años de experiencia.");
+							experienceYears = input.nextInt();
+							input.nextLine();
+							System.out.println("¿El entrenador ha sido jugador profesional? Escriba sí si es cierto, no si es falso.");
+							wasPlayer = input.nextLine();
+							System.out.println("¿Cuál es la experticia del entrenador? (pueden ser: ofensivo, defensivo, posesión, jugadas de laboratorio).");
+							expertice = input.nextLine();
+							System.out.println(newServer.addAssistantCoach(experienceYears, wasPlayer, expertice, name, id, "ACTIVO", salary));
 							break;
 							
 					case 4:
 							System.out.println("Por favor, ingrese el nombre.");
 							name = input.nextLine();
-							System.out.println("Por favor ingrese el salario.");
+							System.out.println("Por favor, ingrese el salario.");
 							salary = input.nextInt();
-							System.out.println("Por favor ingrese la identificación. Recuerde que este número es único.");
+							System.out.println("Por favor, ingrese la identificación. Recuerde que este número es único.");
 							id = input.nextInt();
+							System.out.println("Por favor, ingrese el número de la camiseta.");
+							shirtNum = input.nextInt();
+							System.out.println("Por favor, ingrese los goles que ha hecho el jugador.");
+							goles = input.nextInt();
+							System.out.println("Por favor, ingrese la calificación promedio.");
+							markAverage = input.nextDouble();
+							System.out.println("Por favor, ingrese su posición dentro del campo de juego. Si es portero, ingrese 1; si es defensor, ingrese 2; si es volante, ingrese 3; o si es delantero, ingrese 4.");
+							position = input.nextInt();	
+							input.nextLine();
+							System.out.println(newServer.addPlayer(shirtNum, goles, markAverage, position, name, id, "ACTIVO", salary));						
 							break;
 							
 					case 5:
-					
+							System.out.println("Por favor, ingrese el número del entrenador que quiere despedir. El primero corresponde al número 1.");
+							System.out.println(newServer.showMainCoaches());
+							position = input.nextInt();
+							input.nextLine();
+							System.out.println(newServer.removeMainCoach(position));
 							break;
 					
 					case 6:
-					
+							System.out.println("Por favor, ingrese el número del asistente que quiere despedir. El primero corresponde al número 1.");
+							System.out.println(newServer.showAssistantCoaches());
+							position = input.nextInt();
+							input.nextLine();
+							System.out.println(newServer.removeAssistantCoach(position));
 							break;
 
 					case 7:
-					
+							System.out.println("Por favor, ingrese el número del jugador que quiere despedir. El primero corresponde al número 1.");
+							System.out.println(newServer.showPlayers());
+							position = input.nextInt();
+							input.nextLine();
+							System.out.println(newServer.removePlayer(position));
 							break;
 
 					case 8:
-					
+							System.out.println("Por favor, ingrese el número del equipo al que quiere asignar el entrenador.");
+							System.out.println(newServer.showTeams());
+							teamChoosed = input.nextInt();
+							System.out.println("Por favor, ingrese el número del entrenador que quiere asignar.");
+							System.out.println(newServer.showMainCoaches());
+							position = input.nextInt();
+							System.out.println(newServer.assignMainCoach(position, teamChoosed));
+							System.out.println("");
 							break;
 
 					case 9:
-					
+							System.out.println("Por favor, ingrese el número del equipo al que quiere asignar el asistente.");
+							teamChoosed = input.nextInt();
+							System.out.println(newServer.showTeams());
+							System.out.println("Por favor, ingrese el número del asistente que quiere asignar.");
+							System.out.println(newServer.showAssistantCoaches());
+							position = input.nextInt();
+							System.out.println(newServer.assignMainCoach(position, teamChoosed));
 							break;
 
 					case 10:
-					
+							System.out.println("Por favor, ingrese el número del equipo al que quiere asignar el jugador.");
+							System.out.println(newServer.showTeams());
+							teamChoosed = input.nextInt();
+							System.out.println("Por favor, ingrese el número del jugador que quiere asignar.");
+							System.out.println(newServer.showPlayers());
+							position = input.nextInt();
+							System.out.println(newServer.assignMainCoach(position, teamChoosed));
 							break;
 
 					case 11:
@@ -143,48 +198,74 @@ public class Menu {
 							break;
 
 					case 14:
-					
+							System.out.println(newServer.showAllInfo());
 							break;
 
 					case 15:
-					
+							System.out.println("Para ver la información de: entrenadores principales, dígite 1; asistentes técnicos, dígite 2; jugadores, dígite 3.");
+							System.out.println("Equipos, dígite 4; club, dígite 5; ");
+							typeChoosed = input.nextInt();
+							input.nextLine();
+							System.out.println(newServer.showParticularInfo(typeChoosed));
 							break;	
 
 					case 16:
-					
+							System.out.println("Por favor, ingrese la fecha de la alineación. Día/Mes/Año");
+							date = input.nextLine();
+							System.out.println("Por favor, ingrese el tipo de técnica de la alineación.");
+							tactic = input.nextLine();
+							System.out.println("Por favor, ingrese la formación separada por guiones (-), debe tener entre 3 y 6 números.");
+							formation  =input.nextLine();
 							break;
 
 					case 17:
-					
+							System.out.println("Si es un entrenador principal, dígite 1. Si es un asistente técnico, dígite 2.");
+							typeChoosed = input.nextInt();
+							if(typeChoosed == 1){
+								System.out.println("Por favor, seleccione el número del entrenador a ubicar en las oficinas.");
+								System.out.println(newServer.showMainCoaches());
+								position = input.nextInt();
+							}
+							else{
+								System.out.println("Por favor, ingrese el número del asistente a ubicar en las oficinas.");
+								System.out.println(newServer.showAssistantCoaches());
+							}
+							position = input.nextInt();
+							input.nextLine();
+							System.out.println(newServer.useOffices(typeChoosed, position));
 							break;
 
 					case 18:
-					
+							System.out.println("Por favor, ingrese el número del jugador a ubicar en los camerinos.");
+							position = input.nextInt();
+							input.nextLine();
+							System.out.println(newServer.showPlayers());
 							break;
 
 					case 19:
-					
+							System.out.println("Si desea buscar un entrenador principal, dígite 1. Si desea buscar un asistente técnico, dígite 2.");
+							typeChoosed = input.nextInt();
+							if(typeChoosed == 1){
+								System.out.println("Por favor, ingrese el número del entrenador a buscar.");
+								System.out.println(newServer.showMainCoaches());
+							}
+							else{
+								System.out.println("Por favor, ingrese el número del asistente a buscar.");
+								System.out.println(newServer.showAssistantCoaches());
+							}
+							position = input.nextInt();
+							input.nextLine();
+							System.out.println(newServer.findCoach(position, typeChoosed));
 							break;		
 							
 					case 20:
-					
+							System.out.println("Por favor, dígite el número del jugador a buscar.");
+							System.out.println(newServer.showPlayers());
+							position = input.nextInt();
+							input.nextLine();
+							System.out.println(newServer.findPlayer());
 							break;
-							
-					case 21:
-					
-							break;
-
-					case 22:
-					
-							break;
-
-					case 23:
-					
-							break;
-					
-					case 24:
-					
-							break;
+				
 				}		
 				else{
 						System.out.println("Por favor, primero cree un club.");

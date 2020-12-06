@@ -11,6 +11,7 @@ public class Club{
 	ArrayList <MainCoach> allMainCoaches = new ArrayList <MainCoach>();
 	ArrayList <AssistantCoach>  allAssistantCoaches = new ArrayList <AssistantCoach>();
 	ArrayList <Team> allTeams = new ArrayList <Team>();
+	ArrayList <Alineation> allAlineations = new ArrayList <Alineation>();
 	
 	//Offices.
 	private final static int officesColumns = 6, officesRows = 6;
@@ -31,29 +32,45 @@ public class Club{
 	}
 	
 	//Shows the info  that the user it's asking for.
-	public String showParticularInfo(int type, int position){
+	public String showParticularInfo(int type){
 		boolean space = false;
 		String msg = "";
-		position = position-1;
+		int elements = 0;
 		
 		switch(type){
-			case 1: if(allMainCoaches.size() >= position){
-						msg = allMainCoaches.get(position).showEmployeeInfo();
+			case 1: while(allMainCoaches.size() > elements){
+						msg += allMainCoaches.get(elements).showEmployeeInfo();
+						elements++;
+					}
+					if(allMainCoaches.size() == 0){
+						msg = "Aún no hay entrenadores principales.";
 					}
 					break;
 					
-			case 2: if(allAssistantCoaches.size() >= position){
-						msg = allAssistantCoaches.get(position).showEmployeeInfo();
+			case 2: while(allAssistantCoaches.size() > elements){
+						msg += allAssistantCoaches.get(elements).showEmployeeInfo();
+						elements++;
+					}
+					if(allAssistantCoaches.size() == 0){
+						msg = "Aún no hay asistentes técnicos.";
 					}
 					break;		
 			
-			case 3: if(allPlayers.size() >= position){
-						msg = allPlayers.get(position).showEmployeeInfo();
+			case 3: while(allPlayers.size() > elements){
+						msg += allPlayers.get(elements).showEmployeeInfo();
+						elements++;
+					}
+					if(allPlayers.size() == 0){
+						msg = "Aún no hay jugadores.";
 					}
 					break;
 			
-			case 4: if(allTeams.size() >= position){
-						msg = allTeams.get(position).showTeamInfo();
+			case 4: while(allTeams.size() > elements){
+						msg += allTeams.get(elements).showTeamInfo();
+						elements++;
+					}
+					if(allTeams.size() == 0){
+						msg = "Aún no hay equipos.";
 					}
 					break;
 					
@@ -64,9 +81,10 @@ public class Club{
 					msg += "\n";	
 					break;
 			
-			default: msg = "Tipo de información inexistente.";
+			default: msg = "Tipo de información inexistente. Número inválido.";
 					break;
 		}
+		return msg;
 	}
 	
 	//Shows all the info.
@@ -210,7 +228,7 @@ public class Club{
 		return msg;
 	}
 	
-	public String addAssistantCoach(int experienceYears, boolean wasPlayer, String expertise, String name, int id, String state, int salary){
+	public String addAssistantCoach(int experienceYears, String wasPlayer, String expertise, String name, int id, String state, int salary){
 		String msg = "";
 		
 		allAssistantCoaches.add(new AssistantCoach(experienceYears, wasPlayer, expertise, name, id, state, salary));
@@ -421,5 +439,9 @@ public class Club{
 			}
 		}
 		return msg;
+	}
+
+	public String createAlineation(String date, String tactic, String formation){
+		
 	}
 }

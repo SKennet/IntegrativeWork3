@@ -441,7 +441,87 @@ public class Club{
 		return msg;
 	}
 
-	public String createAlineation(String date, String tactic, String formation){
+	public String updateMainCoachInfo(int coach, int experienceYears, int teamsManaged, int championshipsWinned, String name, int id, int salary){
+		coach = coach-1;
+		String msg = "";
+		if(allMainCoaches.size() > coach){
+			coachToUpdate = allMainCoaches.get(coach);
+			
+			coachToUpdate.setExperienceYears(experienceYears);
+			coachToUpdate.setTeamsManaged(teamsManaged);
+			coachToUpdate.setChampionshipsWinned(championshipsWinned);
+			coachToUpdate.setName(name);
+			coachToUpdate.setId(id);
+			coachToUpdate.setSalary(salary);
+			msg = "Información actualizada correctamente.";
+		}
+		else{
+			msg = "No se pudo actualizar la información porque ese entrenador no existe.";
+		}
+		return msg;
+	}
+	
+	public String updateAssistantCoachInfo(int coach, int experienceYears, String wasPlayer, String expertise, String name, int id, int salary){
+		coach = coach-1;
+		String msg = "";
+		if(allAssistantCoaches.size() > coach){
+			coachToUpdate = allAssistantCoaches.get(coach);
+			
+			coachToUpdate.setExperienceYears(experienceYears);
+			coachToUpdate.setWasPlayer(wasPlayer);
+			coachToUpdate.setExpertise(expertise);
+			coachToUpdate.setName(name);
+			coachToUpdate.setId(id);
+			coachToUpdate.setSalary(salary);
+			msg = "Información actualizada correctamente.";
+		}
+		else{
+			msg = "No se pudo actualizar la información porque ese entrenador no existe.";
+		}
+		return msg;
+	}
+	
+	public String updatePlayerInfo(int player, int shirtNum, int goles, double markAverage, int position, String name, int id, int salary){
+		player = player-1;
+		String msg = "";
 		
+		if(allPlayers.size() > coach){
+			playerToUpdate = allPlayers.get(player);
+			
+			playerToUpdate.setShirtNum(shirtNum);
+			playerToUpdate.setGoles(goles);
+			playerToUpdate.setMarkAverage(markAverage);
+			playerToUpdate.setPosition(position);
+			playerToUpdate.setName(name);
+			playerToUpdate.setId(id);
+			playerToUpdate.setSalary(salary);
+			msg = "Información actualizada correctamente.";
+		}
+		else{
+			msg = "No se pudo actualizar la información porque ese jugador no existe.";
+		}
+		return msg;
+	}
+	
+	public String createAlineation(String date, String tactic, String formation){
+		allAlineations.add(new Alineation(date, tactic, formation))
+		String msg = "Formación añadida correctamente.";
+		return msg;
+	}
+	
+	public String readAlineation(String date){
+		String msg = "";
+		int [] formationFounded;
+		
+		for(int i = 0; i < allAlineations.size() && !founded; i++ ){
+			if(allAlineations.get(i).getDate.equals(date)){
+				formationFounded = allAlineations.get(i).readFormation();
+				msg = formationFounded[0] + "-" + formationFounded[1] + "-" + formationFounded[2];
+			}
+			else{
+				msg ="Error. No hay ninguna alineación para esa fecha.";
+			}
+		}
+		return msg;
 	}
 }

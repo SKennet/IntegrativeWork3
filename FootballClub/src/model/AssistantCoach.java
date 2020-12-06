@@ -6,7 +6,7 @@ public class AssistantCoach extends Employee{
 	boolean wasPlayer;
 	String expertise, name;
 	
-	public AssistantCoach(int experienceYears, boolean wasPlayer, String expertise, String name, int id, boolean state, int salary){
+	public AssistantCoach(int experienceYears, boolean wasPlayer, String expertise, String name, int id, String state, int salary){
 		super(name, id, state, salary);
 		
 		this.name = name;

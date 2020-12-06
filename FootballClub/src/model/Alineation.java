@@ -51,6 +51,7 @@ public class Alineation{
 		}
 		return playersPerRow;
 	}
+
 	/**
 	Creates the formation matrix<br>
 	<b> pre: </b> <br>
@@ -88,6 +89,7 @@ public class Alineation{
 				break;
 		}
 	}
+
 	/**
 	Organizes the players according to the row they should be in<br>
 	<b> pre: </b> <br>
@@ -137,5 +139,34 @@ public class Alineation{
 				break;
 		}
 		return formationMatrix;
+	}
+
+	public int [] readFormation(){
+		boolean founded = false;
+		String msg = "";
+		int [] formationToMedia = new int [3];
+		
+		for(int i = 1; i < 4 ; i++{
+			for(int j = 0; j < 7 ; j++){
+				if(formationMatrix[i][j] == 1){
+					formationToMedia[0] += 1;
+				} 
+			}
+		}
+		for(int i = 4; i < 7 ; i++{
+			for(int j = 0; j < 7 ; j++){
+				if(formationMatrix[i][j] == 1){
+					formationToMedia[1] += 1;
+				} 
+			}
+		}
+		for(int i = 7; i < 10 ; i++{
+			for(int j = 0; j < 7 ; j++){
+				if(formationMatrix[i][j] == 1){
+					formationToMedia[2] += 1;
+				} 
+			}
+		}
+		return formationToMedia;
 	}
 }

@@ -8,7 +8,7 @@ public class Player extends Employee{
 	private static final double LVL_CONSTANT = 0.9;
 	
 	
-	public Player(int shirtNum, int goles, double markAverage, int position, String name, int id, boolean state, int salary, Team playerTeam){
+	public Player(int shirtNum, int goles, double markAverage, int position, String name, int id, String state, int salary, Team playerTeam){
 		super(name, id, state, salary);
 		
 		this.salary = super.salary;
